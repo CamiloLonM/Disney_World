@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { sequelize } = require("./database/db");
+const sequelize = require("../database/db");
 
 class Server {
   constructor() {
