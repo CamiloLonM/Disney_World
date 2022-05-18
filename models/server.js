@@ -1,5 +1,5 @@
 const express = require("express");
-
+const characters = require("./characters");
 const sequelize = require("../database/db");
 
 class Server {
@@ -8,20 +8,22 @@ class Server {
     this.port = process.env.PORT;
     //Ruta App
     //this.routes();
+    //middlewares
+    // this.middlewares();
   }
 
-  //middlewares() {
-  //lectura y parseo del body
-  //this.app(express.json());
-  //}
+  // middlewares() {
+  //   //lectura parseo Body
+  //   //this.app.use(express.json());
+  // }
 
   //routes(){
   // this.app.use(this.usuariosPath, require())
   //}
-
+  // Force true : DROP TABLES
   async listen() {
     try {
-      await sequelize.authenticate();
+      await sequelize.sync({ force: false });
       console.log("Connection has been established successfully.");
     } catch (error) {
       console.error("Unable to connect to the database:", error);
