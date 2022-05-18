@@ -1,11 +1,12 @@
 // Controlador de ruta via acceso
-const { Router } = require("express");
-const { append } = require("express/lib/response");
-const { upsert } = require("../models/characters");
-
+const express = require("express");
 const Character = require("../models/characters");
+const app = express();
+const { Router } = require("express");
 
-app.get("/", (req, res) => {
+const router = Router();
+router.post("/characters", (req, res) => {
+  console.log(req.body);
   Character.create({
     name: "Goofy",
     // image:// para agregar la imagen NO SE xD
@@ -19,7 +20,5 @@ app.get("/", (req, res) => {
     res.json(Character);
   });
 });
-
-const router = Router();
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const express = require("express");
-const characters = require("./characters");
+const Character = require("./characters");
+const MoviesOrSeries = require("./moviesOrSeries");
 const sequelize = require("../database/db");
 
 class Server {
@@ -7,24 +8,34 @@ class Server {
     this.app = express();
     this.port = process.env.PORT;
     //Ruta App
-    //this.routes();
+    this.routes();
     //middlewares
-    // this.middlewares();
+    this.middlewares();
   }
 
-  // middlewares() {
-  //   //lectura parseo Body
-  //   //this.app.use(express.json());
-  // }
+  middlewares() {
+    this.app.use(require("../routes/User"));
+    //lectura parseo Body
+    this.app.use(express.json());
+  }
 
-  //routes(){
-  // this.app.use(this.usuariosPath, require())
-  //}
+  routes() {
+    this.app.listen(process.env.PORT, () => {
+      console.log(`Server running on port ${process.env.PORT}`);
+    });
+  }
   // Force true : DROP TABLES
   async listen() {
     try {
-      await sequelize.sync({ force: false });
+      await sequelize.authenticate();
       console.log("Connection has been established successfully.");
+      MoviesOrSeries.belongsToMany(Character, {
+        through: "Character_MoviesOrSeries",
+      });
+      Character.belongsToMany(MoviesOrSeries, {
+        through: "Character_MoviesOrSeries",
+      });
+      sequelize.sync();
     } catch (error) {
       console.error("Unable to connect to the database:", error);
     }

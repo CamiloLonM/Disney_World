@@ -18,11 +18,6 @@ Character.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    Associated: {
-      movies: DataTypes.STRING,
-      Orseries: DataTypes.STRING,
-      allowNull: false,
-    },
   },
   {
     sequelize,
