@@ -1,32 +1,26 @@
-const { DataTypes, Model } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../database/db");
-const Character = require("./characters");
 
-class MoviesOrSeries extends Model {}
-MoviesOrSeries.init(
-  {
-    tittle: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    image: {
-      type: DataTypes.BLOB,
-      allowNull: false,
-    },
-    creationDate: {
-      type: DataTypes.DATE,
-    },
-    qualification: {
-      type: DataTypes.INTEGER,
-    },
+const MoviesOrSeries = sequelize.define("MoviesOrSeries", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
   },
-  {
-    sequelize,
-    modelName: "MoviesOrSeries",
-  }
-);
-
-// Pertenece a :
-// MoviesOrSeries.Character = MoviesOrSeries.belongsTo(Character);
+  image: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: { len: [0, 300] },
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: { len: [0, 50] },
+  },
+  qualification: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+});
 
 module.exports = MoviesOrSeries;

@@ -1,30 +1,22 @@
-const { DataTypes, Model } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../database/db");
-const characters = require("./characters");
-const MoviesOrSeries = require("./moviesOrSeries");
 
-class Gender extends Model {}
-
-Gender.init(
-  {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    image: DataTypes.BLOB,
-    Associated: {
-      movies: DataTypes.STRING,
-      Orseries: DataTypes.STRING,
-      allowNull: false,
-    },
+const Gender = sequelize.define("Gender", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
   },
-  {
-    // Asociar los ( Associated: que son series o pelicula de la carpeta personajes)
-    sequelize,
-    modelName: "Gender",
-  }
-);
-
-// Gender.MoviesOrSeries = Gender.belongsTo(MoviesOrSeries);
+  name: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    validate: { len: [0, 50] },
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: { len: [0, 300] },
+  },
+});
 
 module.exports = Gender;
