@@ -1,7 +1,7 @@
 // Controlador de ruta via acceso
-const express = require("express");
-
 const { Router } = require("express");
+
+const router = Router();
 
 const {
   userGet,
@@ -9,14 +9,14 @@ const {
   userPut,
   userPatch,
   userDelete,
+  getMovies,
 } = require("../controllers/user");
 
-const router = Router();
-
 router.get("/", userGet);
+router.get("/movies", getMovies);
 router.post("/", userPost);
-router.put("/", userPut);
+router.put("/:id", userPut);
 router.patch("/", userPatch);
-router.delete("/", userDelete);
+router.delete("/:id", userDelete);
 
 module.exports = router;

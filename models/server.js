@@ -1,25 +1,27 @@
 const express = require("express");
+const app = require("express");
 const Character = require("./characters");
 const MoviesOrSeries = require("./moviesOrSeries");
 const Gender = require("./gender");
 const sequelize = require("../database/db");
+const UserRoutes = require("../routes/Users");
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
     this.userPath = "/characters";
-
-    //Ruta App
-    this.routes();
     //middlewares
     this.middlewares();
+    //Ruta App
+    this.routes();
   }
 
   middlewares() {
     //lectura parseo Body
     this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(UserRoutes);
+    this.app.use(express.static("public"));
   }
 
   routes() {
@@ -47,7 +49,9 @@ class Server {
       Gender.belongsToMany(MoviesOrSeries, {
         through: "MoviesOrSeries_Gender",
       });
-      sequelize.sync();
+      sequelize.sync().then(() => {
+        console.log("Synchronized Tables");
+      });
     } catch (error) {
       console.error("Unable to connect to the database:", error);
     }
