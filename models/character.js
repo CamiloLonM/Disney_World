@@ -21,7 +21,7 @@ const Character = sequelize.define("Character", {
   },
   age: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   weight: {
     type: DataTypes.INTEGER,

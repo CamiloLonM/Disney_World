@@ -1,7 +1,8 @@
-const Character = require("../models/characters");
+const Character = require("../models/character");
 const Gender = require("../models/gender");
-const MoviesOrSeries = require("../models/moviesOrSeries");
+const MoviesOrSeries = require("../models/moviesOrSerie");
 
+// Punto 3
 const userGet = async (req, res) => {
   try {
     const characters = await Character.findAll();
@@ -11,35 +12,41 @@ const userGet = async (req, res) => {
   }
 };
 
-const getMovies = async (req, res) => {
-  // campo 7
+// punto 5
+const getUserById = async (req, res) => {
   try {
-    const { id, image, title } = req.params;
-    const movies = await MoviesOrSeries.findOne({
+    const character = await Character.findAll({
       where: {
-        id,
-        image,
-        title,
+        id: req.params.id,
+      },
+      include: {
+        model: MoviesOrSeries,
       },
     });
-    if (!movies) return res.status(404).json({ message: "movies don't exist" });
-    res.json;
+    if (character === null) {
+      console.log("Not found !");
+    }
+    res.json(character);
   } catch (error) {
-    return res.status(500).json({ msg: error.msg });
+    return res.status(500).json({ message: error.message });
   }
 };
 
 const userPost = async (req, res) => {
-  const { name, history, image } = req.body;
+  const { name, image } = req.body;
+
+  if (!name || !image)
+    res.status(400).json({ message: `please check the data` });
   try {
     const newCharacter = await Character.create({
       name,
-      history,
       image,
+      ...req.body,
     });
-    res.json(newCharacter);
+    res.status(201).json(newCharacter);
   } catch (error) {
-    return res.status(500).json({ msg: error.msg });
+    console.log(error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -63,7 +70,7 @@ const userPut = async (req, res) => {
 
     res.json(character);
   } catch (error) {
-    return res.status(500).json({ msg: error.msg });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -77,13 +84,13 @@ const userDelete = async (req, res) => {
     });
     res.sendStatus(204);
   } catch (error) {
-    return res.status(500).json({ msg: error.msg });
+    return res.status(500).json({ message: error.message });
   }
 };
 
 module.exports = {
   userGet,
-  getMovies,
+  getUserById,
   userPost,
   userPut,
   userPatch,

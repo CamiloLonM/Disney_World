@@ -9,11 +9,11 @@ const {
   userPut,
   userPatch,
   userDelete,
-  getMovies,
-} = require("../controllers/user");
+  getUserById,
+} = require("../controllers/characters");
 
 router.get("/", userGet);
-router.get("/movies", getMovies);
+router.get("/:id", getUserById);
 router.post("/", userPost);
 router.put("/:id", userPut);
 router.patch("/", userPatch);

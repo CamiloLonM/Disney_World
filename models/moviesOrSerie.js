@@ -19,7 +19,7 @@ const MoviesOrSeries = sequelize.define("MoviesOrSeries", {
   },
   qualification: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 });
 
