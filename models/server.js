@@ -1,11 +1,12 @@
 const express = require("express");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
 const app = require("express");
 const Character = require("./character");
 const MoviesOrSeries = require("./moviesOrSerie");
 const Gender = require("./gender");
 const sequelize = require("../database/db");
-const CharacterRoutes = require("../routes/characters");
-const MoviesOrSerieRoutes = require("../routes/moviesOrseries");
+const Swagger = require("../swaggerDoc");
 
 class Server {
   constructor() {
@@ -13,6 +14,7 @@ class Server {
     this.port = process.env.PORT;
     this.characterPath = "/characters";
     this.moviesOrSeriePath = "/movies";
+    this.Swagger = "/api-doc";
 
     //middlewares
     this.middlewares();
@@ -24,6 +26,8 @@ class Server {
     //lectura parseo Body
     this.app.use(express.json());
     this.app.use(express.static("public"));
+    // Swagger
+    this.app.use(swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(Swagger)));
   }
 
   routes() {

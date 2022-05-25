@@ -8,6 +8,7 @@ const {
   moviesDelete,
   moviesPost,
   moviesPut,
+  //moviesPatch,
 } = require("../controllers/moviesOrSeries");
 
 router.get("/", moviesGet);

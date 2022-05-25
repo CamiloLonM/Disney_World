@@ -8,7 +8,7 @@ const moviesGet = async (req, res) => {
     const moviesOrSerie = await MoviesOrSeries.findAll({
       attributes: ["title", "image"],
     });
-    res.json(moviesOrSerie);
+    return res.status(200).json(moviesOrSerie);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -21,9 +21,13 @@ const moviesGetId = async (req, res) => {
       where: {
         id: req.params.id,
       },
+      include: {
+        model: Character,
+      },
     });
-    if (moviesOrSerie === null)
-      return res.status(404), json({ message: "Not found !" });
+    if (moviesOrSerie === null) {
+      return res.status(404).json({ message: "Not found !" });
+    }
     res.json(moviesOrSerie);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -32,13 +36,18 @@ const moviesGetId = async (req, res) => {
 
 // Parte 9
 const moviesPut = async (req, res) => {
-  const { id } = req.params;
-  const movie = await MoviesOrSeries.findOne({
-    where: { id },
-  });
-  movie.set(req.body);
-  await movie.save();
-  return res.json(movie);
+  try {
+    const { id } = req.params;
+    const movie = await MoviesOrSeries.findOne({
+      where: { id },
+    });
+    movie.set(req.body);
+    await movie.save();
+
+    res.json(movie);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
 const moviesPost = async (req, res) => {
@@ -51,7 +60,7 @@ const moviesPost = async (req, res) => {
       image,
       ...req.body,
     });
-    res.json(newMovieOrSerie);
+    res.status(201).json(newMovieOrSerie);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error.message });

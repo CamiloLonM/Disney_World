@@ -5,8 +5,10 @@ const MoviesOrSeries = require("../models/moviesOrSerie");
 // Punto 3
 const userGet = async (req, res) => {
   try {
-    const characters = await Character.findAll();
-    res.json(characters);
+    const characters = await Character.findAll({
+      attributes: ["name", "image"],
+    });
+    return res.status(200).json(characters);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -24,7 +26,7 @@ const getUserById = async (req, res) => {
       },
     });
     if (character === null) {
-      console.log("Not found !");
+      return res.status(404).json({ message: "Not found !" });
     }
     res.json(character);
   } catch (error) {
