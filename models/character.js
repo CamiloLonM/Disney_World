@@ -31,7 +31,7 @@ const Character = sequelize.define("Character", {
     type: DataTypes.STRING,
     allowNull: true,
     validate: { len: [0, 200] },
-  },
+  }
 });
 
 module.exports = Character;

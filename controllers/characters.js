@@ -1,13 +1,15 @@
 const Character = require("../models/character");
-const Gender = require("../models/gender");
 const MoviesOrSeries = require("../models/moviesOrSerie");
+const path = require("path");
+const fs = require("fs");
+
+const service = require("../services/characters");
 
 // Punto 3
-const userGet = async (req, res) => {
+const getCharacters = async (req, res) => {
   try {
-    const characters = await Character.findAll({
-      attributes: ["name", "image"],
-    });
+    let characters = await service.getCharacters();
+
     return res.status(200).json(characters);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -15,86 +17,67 @@ const userGet = async (req, res) => {
 };
 
 // punto 5
-const getUserById = async (req, res) => {
+const getCharactersId = async (req, res) => {
   try {
-    const character = await Character.findAll({
-      where: {
-        id: req.params.id,
-      },
-      include: {
-        model: MoviesOrSeries,
-      },
-    });
-    if (character === null) {
-      return res.status(404).json({ message: "Not found !" });
-    }
-    res.json(character);
+    let characters = await service.getCharactersId();
+
+    return res.sendstatus(204).json(characters);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-const userPost = async (req, res) => {
-  const { name, image } = req.body;
-
-  if (!name || !image)
-    res.status(400).json({ message: `please check the data` });
+const searchCharacter = async (req, res) => {
   try {
-    const newCharacter = await Character.create({
-      name,
-      image,
-      ...req.body,
-    });
-    res.status(201).json(newCharacter);
+    const { query } = req;
+
+    const characters = await service.searchCharacters(query);
+
+    return res.status(200).json(characters);
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: error.message });
   }
 };
 
-const userPatch = async (req, res) => {
-  res.json({
-    msg: "Test Patch",
-  });
+const postCharacters = async (req, res) => {
+  try {
+    const characters = await service.postCharacters();
+    return res.status(201).json(characters);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
 };
 
-const userPut = async (req, res) => {
+// PREGUNTAR ESTE
+const putCharacters = async (req, res) => {
   // parte 9 del proyecto
+  /**
+   * 2- (modificar la imagen en caso de ser necesario) si alcanza el tiempo
+   */
   try {
-    const { id } = req.params;
-    const { name, age, MoviesOrSeries } = req.body;
-    const character = await Character.findByPk(id);
-    character.name = name;
-    character.age = age;
-    character.MoviesOrSeries = MoviesOrSeries;
+    const characters = await service.putCharacters();
 
-    await character.save();
-
-    res.json(character);
+    return res.status(200).json(characters);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-const userDelete = async (req, res) => {
+const DeleteCharacters = async (req, res) => {
   try {
-    const { id } = req.params;
-    await Character.destroy({
-      where: {
-        id,
-      },
-    });
-    res.sendStatus(204);
+    let characters = await service.DeleteCharacters();
+
+    return res.sendStatus(204).json(characters);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
 module.exports = {
-  userGet,
-  getUserById,
-  userPost,
-  userPut,
-  userPatch,
-  userDelete,
+  getCharacters,
+  getCharactersId,
+  searchCharacter,
+  postCharacters,
+  putCharacters,
+  DeleteCharacters,
 };

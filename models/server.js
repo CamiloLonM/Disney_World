@@ -7,6 +7,8 @@ const MoviesOrSeries = require("./moviesOrSerie");
 const Gender = require("./gender");
 const sequelize = require("../database/db");
 const Swagger = require("../swaggerDoc");
+const path = require("path");
+const jwt = require("jsonwebtoken");
 
 class Server {
   constructor() {
@@ -14,6 +16,8 @@ class Server {
     this.port = process.env.PORT;
     this.characterPath = "/characters";
     this.moviesOrSeriePath = "/movies";
+    this.authPath = "/auth";
+
     this.Swagger = "/api-doc";
 
     //middlewares
@@ -25,12 +29,14 @@ class Server {
   middlewares() {
     //lectura parseo Body
     this.app.use(express.json());
-    this.app.use(express.static("public"));
+    this.app.use(express.static(path.resolve(__dirname, "../images")));
+
     // Swagger
     this.app.use(swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(Swagger)));
   }
 
   routes() {
+    this.app.use(this.authPath, require("../routes/auth"));
     this.app.use(this.characterPath, require("../routes/characters"));
     this.app.use(this.moviesOrSeriePath, require("../routes/moviesOrseries"));
   }

@@ -3,20 +3,24 @@ const { Router } = require("express");
 
 const router = Router();
 
+const multerMiddleware = require("../middlewares/multer");
+
 const {
-  userGet,
-  userPost,
-  userPut,
-  userPatch,
-  userDelete,
-  getUserById,
+  getCharacters,
+  getCharactersId,
+  searchCharacter,
+  postCharacters,
+
+  putCharacters,
+  DeleteCharacters,
 } = require("../controllers/characters");
 
-router.get("/", userGet);
-router.get("/:id", getUserById);
-router.post("/", userPost);
-router.put("/:id", userPut);
-router.patch("/", userPatch);
-router.delete("/:id", userDelete);
+router.get("/", getCharacters);
+router.get("/search", searchCharacter);
+router.get("/:id", getCharactersId);
+router.post("/", multerMiddleware, postCharacters);
+router.put("/:id", putCharacters);
+
+router.delete("/:id", DeleteCharacters);
 
 module.exports = router;

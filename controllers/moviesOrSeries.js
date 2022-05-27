@@ -2,13 +2,13 @@ const Character = require("../models/character");
 const Gender = require("../models/gender");
 const MoviesOrSeries = require("../models/moviesOrSerie");
 
+const service = require("../services/moviesOrSeries");
 // 7
 const moviesGet = async (req, res) => {
   try {
-    const moviesOrSerie = await MoviesOrSeries.findAll({
-      attributes: ["title", "image"],
-    });
-    return res.status(200).json(moviesOrSerie);
+    const moviesOrSeries = await service.moviesGet();
+
+    return res.status(200).json(moviesOrSeries);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -17,18 +17,8 @@ const moviesGet = async (req, res) => {
 // parte 8
 const moviesGetId = async (req, res) => {
   try {
-    const moviesOrSerie = await MoviesOrSeries.findAll({
-      where: {
-        id: req.params.id,
-      },
-      include: {
-        model: Character,
-      },
-    });
-    if (moviesOrSerie === null) {
-      return res.status(404).json({ message: "Not found !" });
-    }
-    res.json(moviesOrSerie);
+    const moviesOrSeries = await service.moviesGetId();
+    return res.status(404).json(moviesOrSeries);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -37,14 +27,8 @@ const moviesGetId = async (req, res) => {
 // Parte 9
 const moviesPut = async (req, res) => {
   try {
-    const { id } = req.params;
-    const movie = await MoviesOrSeries.findOne({
-      where: { id },
-    });
-    movie.set(req.body);
-    await movie.save();
-
-    res.json(movie);
+    const moviesOrSeries = await service.moviesPut();
+    return res.status(201).json(moviesOrSeries);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -52,15 +36,10 @@ const moviesPut = async (req, res) => {
 
 const moviesPost = async (req, res) => {
   const { title, image } = req.body;
-
-  if (!title || !image) res.status(400);
+  if (!title || !image) res.status(400); /// PREGUNTAR
   try {
-    const newMovieOrSerie = await MoviesOrSeries.create({
-      title,
-      image,
-      ...req.body,
-    });
-    res.status(201).json(newMovieOrSerie);
+    const moviesOrSeries = await service.moviesPost();
+    res.status(201).json(moviesOrSeries);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error.message });
@@ -69,13 +48,8 @@ const moviesPost = async (req, res) => {
 
 const moviesDelete = async (req, res) => {
   try {
-    const { id } = req.params;
-    await MoviesOrSeries.destroy({
-      where: {
-        id,
-      },
-    });
-    res.sendStatus(204);
+    const moviesOrSeries = await service.moviesDelete();
+    return res.sendStatus(204).json(moviesOrSeries);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

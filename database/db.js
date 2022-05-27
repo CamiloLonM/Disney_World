@@ -8,6 +8,9 @@ const sequelize = new Sequelize(
   {
     host: database.host,
     dialect: "mysql",
+    query: {
+      raw: true
+    }
   }
 );
 

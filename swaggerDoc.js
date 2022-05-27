@@ -1,5 +1,3 @@
-const path = require("path");
-
 const swaggerSpec = {
   definition: {
     openapi: "3.0.3",
@@ -20,7 +18,8 @@ const swaggerSpec = {
       },
     ],
   },
-  apis: [`${path.join(__dirname, "./routes/*.js")}`], // O ./routes/characters.js +++++++
+  //apis: [`${path.join(__dirname, "./routes/*.js")}`], // O ./routes/characters.js +++++++
+  //apis: [`${path.join("./docs/*.js")}`],
+  apis: ["/docs/*.js"],
 };
-
 module.exports = swaggerSpec;
