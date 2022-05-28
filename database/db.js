@@ -1,12 +1,12 @@
 const { Sequelize } = require("sequelize");
-const { database } = require("./config");
+const config = require('../config');
 
 const sequelize = new Sequelize(
-  database.database,
-  database.username,
-  database.password,
+  config.database.database,
+  config.database.username,
+  config.database.password,
   {
-    host: database.host,
+    host: config.database.host,
     dialect: "mysql",
     query: {
       raw: true

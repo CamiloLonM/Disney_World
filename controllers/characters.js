@@ -8,7 +8,7 @@ const service = require("../services/characters");
 // Punto 3
 const getCharacters = async (req, res) => {
   try {
-    let characters = await service.getCharacters();
+    const characters = await service.getCharacters();
 
     return res.status(200).json(characters);
   } catch (error) {
@@ -17,11 +17,15 @@ const getCharacters = async (req, res) => {
 };
 
 // punto 5
-const getCharactersId = async (req, res) => {
+const getCharacterById = async (req, res) => {
   try {
-    let characters = await service.getCharactersId();
+    const character = await service.getCharacterById(req.params.id);
 
-    return res.sendstatus(204).json(characters);
+    if (!character) {
+      return res.sendStatus(204);
+    }
+
+    return res.status(200).json(character);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -39,35 +43,50 @@ const searchCharacter = async (req, res) => {
   }
 };
 
-const postCharacters = async (req, res) => {
+const postCharacter = async (req, res) => {
   try {
-    const characters = await service.postCharacters();
-    return res.status(201).json(characters);
+    if (!req.body.name || !req.file) {
+      return res.status(400).json({ message: `please check the data` });
+    }
+
+    const character = await service.postCharacter(req.body, req.file.filename);
+    return res.status(201).json(character);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-// PREGUNTAR ESTE
-const putCharacters = async (req, res) => {
+const putCharacter = async (req, res) => {
   // parte 9 del proyecto
   /**
    * 2- (modificar la imagen en caso de ser necesario) si alcanza el tiempo
    */
   try {
-    const characters = await service.putCharacters();
+    if (!req.body.name) {
+      return res.status(400).json({ message: `please check the data` });
+    }
 
-    return res.status(200).json(characters);
+    if (!service.getCharacterById(req.params.id)) {
+      return res.status(404).json({ message: "Character not found." });
+    }
+
+    await service.putCharacter(req.params.id, req.body);
+
+    return res.sendStatus(200);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-const DeleteCharacters = async (req, res) => {
+const deleteCharacter = async (req, res) => {
   try {
-    let characters = await service.DeleteCharacters();
+    if (!service.getCharacterById(req.params.id)) {
+      return res.status(404).json({ message: "Character not found." });
+    }
 
-    return res.sendStatus(204).json(characters);
+    await service.deleteCharacter(req.params.id);
+
+    return res.sendStatus(200);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -75,9 +94,9 @@ const DeleteCharacters = async (req, res) => {
 
 module.exports = {
   getCharacters,
-  getCharactersId,
+  getCharacterById,
   searchCharacter,
-  postCharacters,
-  putCharacters,
-  DeleteCharacters,
+  postCharacter,
+  putCharacter,
+  deleteCharacter,
 };

@@ -6,19 +6,20 @@ const Character = require("./character");
 const MoviesOrSeries = require("./moviesOrSerie");
 const Gender = require("./gender");
 const sequelize = require("../database/db");
-const Swagger = require("../swaggerDoc");
+const swaggerConfiguration = require("../swaggerConfiguration");
 const path = require("path");
 const jwt = require("jsonwebtoken");
+const config = require('../config');
 
 class Server {
   constructor() {
     this.app = express();
-    this.port = process.env.PORT;
+
     this.characterPath = "/characters";
     this.moviesOrSeriePath = "/movies";
     this.authPath = "/auth";
 
-    this.Swagger = "/api-doc";
+    this.swaggerPath = "/docs";
 
     //middlewares
     this.middlewares();
@@ -32,7 +33,7 @@ class Server {
     this.app.use(express.static(path.resolve(__dirname, "../images")));
 
     // Swagger
-    this.app.use(swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(Swagger)));
+    this.app.use(this.swaggerPath, swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerConfiguration)));
   }
 
   routes() {
@@ -42,8 +43,8 @@ class Server {
   }
 
   async listen() {
-    this.app.listen(process.env.PORT, () => {
-      console.log(`Server running on port ${process.env.PORT}`);
+    this.app.listen(config.port, () => {
+      console.log(`Server running on port ${config.port}`);
     });
     try {
       await sequelize.authenticate();

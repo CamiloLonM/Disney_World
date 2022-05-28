@@ -7,18 +7,16 @@ module.exports.getCharacters = async () => {
   });
 };
 
-module.exports.getCharactersId = async () => {
-  const character = await Character.findOne({
+module.exports.getCharacterById = async (id) => {
+  return await Character.findOne({
     where: {
-      id: req.params.id,
+      id
     },
     include: {
       model: MoviesOrSeries,
     },
     raw: false,
   });
-  if (!character) {
-  }
 };
 
 module.exports.searchCharacters = async (params) => {
@@ -47,34 +45,24 @@ module.exports.createCharacter = async (body) => {
   return newCharacter;
 };
 
-module.exports.postCharacters = async () => {
-  if (!req.body.name || !req.file) {
-    return res.status(400).json({ message: `please check the data` });
-  }
+module.exports.postCharacter = async (body, filename) => {
   const newCharacter = await service.createCharacter({
-    ...req.body,
-    image: req.file.filename,
+    ...body,
+    image: filename,
   });
+
   return newCharacter;
 };
 
-module.exports.putCharacters = async () => {
-  /**  arte 9 del proyecto
-   * 1- pasar la logica al service
-   * 2- (modificar la imagen en caso de ser necesario) si alcanza el tiempo
-   */
-  const { id } = req.params;
-  const { name, age, MoviesOrSeries } = req.body;
-  const character = await Character.findByPk(id);
-  character.name = name;
-  character.age = age;
-  character.MoviesOrSeries = MoviesOrSeries;
-
-  await character.save();
+module.exports.putCharacter = async (id, body) => {
+  await Character.update(body, {
+    where: {
+      id
+    }
+  });
 };
 
-module.exports.DeleteCharacters = async () => {
-  const { id } = req.params;
+module.exports.deleteCharacter = async (id) => {
   await Character.destroy({
     where: {
       id,

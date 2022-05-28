@@ -3,24 +3,22 @@ const { Router } = require("express");
 
 const router = Router();
 
-const multerMiddleware = require("../middlewares/multer");
+const { multerSingleFileCharacter } = require("../middlewares/multer");
 
 const {
   getCharacters,
-  getCharactersId,
+  getCharacterById,
   searchCharacter,
-  postCharacters,
-
-  putCharacters,
-  DeleteCharacters,
+  postCharacter,
+  putCharacter,
+  deleteCharacter,
 } = require("../controllers/characters");
 
 router.get("/", getCharacters);
 router.get("/search", searchCharacter);
-router.get("/:id", getCharactersId);
-router.post("/", multerMiddleware, postCharacters);
-router.put("/:id", putCharacters);
-
-router.delete("/:id", DeleteCharacters);
+router.get("/:id", getCharacterById);
+router.post("/", multerSingleFileCharacter, postCharacter);
+router.put("/:id", putCharacter);
+router.delete("/:id", deleteCharacter);
 
 module.exports = router;

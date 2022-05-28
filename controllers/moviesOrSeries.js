@@ -4,9 +4,9 @@ const MoviesOrSeries = require("../models/moviesOrSerie");
 
 const service = require("../services/moviesOrSeries");
 // 7
-const moviesGet = async (req, res) => {
+const getMovies = async (req, res) => {
   try {
-    const moviesOrSeries = await service.moviesGet();
+    const moviesOrSeries = await service.getMovies();
 
     return res.status(200).json(moviesOrSeries);
   } catch (error) {
@@ -15,10 +15,15 @@ const moviesGet = async (req, res) => {
 };
 
 // parte 8
-const moviesGetId = async (req, res) => {
+const getMovieById = async (req, res) => {
   try {
-    const moviesOrSeries = await service.moviesGetId();
-    return res.status(404).json(moviesOrSeries);
+    const movieOrSerie = await service.getMovieById(req.params.id);
+
+    if(!movieOrSerie) {
+      return res.sendStatus(204);
+    }
+
+    return res.status(200).json(movieOrSerie);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -56,8 +61,8 @@ const moviesDelete = async (req, res) => {
 };
 
 module.exports = {
-  moviesGet,
-  moviesGetId,
+  getMovies,
+  getMovieById,
   moviesDelete,
   moviesPut,
   moviesPost,

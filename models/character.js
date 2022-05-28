@@ -19,6 +19,7 @@ const Character = sequelize.define("Character", {
     allowNull: false,
     validate: { len: [0, 50] },
   },
+  // birth_date
   age: {
     type: DataTypes.INTEGER,
     allowNull: true,

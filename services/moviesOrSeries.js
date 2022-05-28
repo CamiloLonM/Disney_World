@@ -3,24 +3,22 @@ const Character = require("../models/character");
 
 const service = require("./characters_moviesOrSeries");
 
-module.exports.moviesGet = async () => {
-  const moviesOrSerie = await MoviesOrSeries.findAll({
+module.exports.getMovies = async () => {
+  return await MoviesOrSeries.findAll({
     attributes: ["title", "image", "creation_date"],
   });
-  return moviesOrSerie; // preguntar
 };
 
-module.exports.moviesGetId = async () => {
-  const moviesOrSerie = await MoviesOrSeries.findAll({
+module.exports.getMovieById = async (id) => {
+  return await MoviesOrSeries.findOne({
     where: {
-      id: req.params.id,
+      id
     },
     include: {
       model: Character,
     },
+    raw: false,
   });
-  if (moviesOrSerie === null) {
-  }
 };
 
 module.exports.moviesPut = async () => {
