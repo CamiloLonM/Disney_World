@@ -1,8 +1,3 @@
-const Character = require("../models/character");
-const MoviesOrSeries = require("../models/moviesOrSerie");
-const path = require("path");
-const fs = require("fs");
-
 const service = require("../services/characters");
 
 // Punto 3
@@ -31,6 +26,7 @@ const getCharacterById = async (req, res) => {
   }
 };
 
+// PUNTO 6 QUERY PARAMS
 const searchCharacter = async (req, res) => {
   try {
     const { query } = req;
@@ -57,7 +53,7 @@ const postCharacter = async (req, res) => {
 };
 
 const putCharacter = async (req, res) => {
-  // parte 9 del proyecto
+  // 4
   /**
    * 2- (modificar la imagen en caso de ser necesario) si alcanza el tiempo
    */

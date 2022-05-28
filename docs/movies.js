@@ -1,38 +1,35 @@
 /**
  * @swagger
- * /characters/{id}:
+ * /moviesOrSeries/{id}:
  *  get:
- *   summary: Get Character by id
- *   description: endpoint to get character by id
+ *   summary: Get MovieOrSerie by id
+ *   description: endpoint to get movie by id
  *   security:
  *    - bearerAuth: []
  *   parameters:
  *    - in: path
- *      name: id
+ *      title: id
  *      required: true
- *      description: Numeric ID for the character
+ *      description: Numeric ID for the movie
  *      schema:
  *       id: integer
  *   responses:
  *     200:
- *       description: get character OK
+ *       description: get movie OK
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               first_name:
+ *               title:
  *                 type: string
- *               last_name:
+ *               image:
  *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
+ *
  *     204:
- *       description: character not found
+ *       description: movie not found
  *     400:
- *       description: create character ERROR
+ *       description: create movie ERROR
  *       content:
  *         application/json:
  *           schema:
@@ -40,7 +37,6 @@
  *             properties:
  *               message:
  *                 type: string
- *                 description: create character ERROR
- *
+ *                 description: description of error
  *
  */

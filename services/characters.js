@@ -10,7 +10,7 @@ module.exports.getCharacters = async () => {
 module.exports.getCharacterById = async (id) => {
   return await Character.findOne({
     where: {
-      id
+      id,
     },
     include: {
       model: MoviesOrSeries,
@@ -19,6 +19,7 @@ module.exports.getCharacterById = async (id) => {
   });
 };
 
+// PUNTO 6 QUERY PARAMS
 module.exports.searchCharacters = async (params) => {
   let queryFilter = {};
 
@@ -32,6 +33,7 @@ module.exports.searchCharacters = async (params) => {
   return await Character.findAll(queryFilter);
 };
 
+// PREGUNTAR
 module.exports.createCharacter = async (body) => {
   const newCharacter = await Character.create(body);
   console.log("AAA -> ", newCharacter);
@@ -57,8 +59,8 @@ module.exports.postCharacter = async (body, filename) => {
 module.exports.putCharacter = async (id, body) => {
   await Character.update(body, {
     where: {
-      id
-    }
+      id,
+    },
   });
 };
 

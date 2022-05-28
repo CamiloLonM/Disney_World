@@ -5,15 +5,17 @@ const router = Router();
 const {
   getMovies,
   getMovieById,
-  moviesDelete,
-  moviesPost,
-  moviesPut,
+  searchMovie,
+  deleteMovie,
+  postMovie,
+  putMovie,
 } = require("../controllers/moviesOrSeries");
 
 router.get("/", getMovies);
 router.get("/:id", getMovieById);
-router.post("/", moviesPost);
-router.put("/:id", moviesPut);
-router.delete("/:id", moviesDelete);
+router.get("/search", searchMovie);
+router.post("/", postMovie);
+router.put("/:id", putMovie);
+router.delete("/:id", deleteMovie);
 
 module.exports = router;

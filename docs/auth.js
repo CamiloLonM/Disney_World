@@ -40,7 +40,8 @@
  *             properties:
  *               message:
  *                 type: string
- *                 description: create character ERROR
+ *                 description: description of error
  *
- *
+ * /characters:
+ *  get:
  */

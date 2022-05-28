@@ -1,18 +1,18 @@
-const MoviesOrSeries = require("../models/moviesOrSerie");
+const MoviesOrSerie = require("../models/moviesOrSerie");
 const Character = require("../models/character");
 
 const service = require("./characters_moviesOrSeries");
 
 module.exports.getMovies = async () => {
-  return await MoviesOrSeries.findAll({
+  return await MoviesOrSerie.findAll({
     attributes: ["title", "image", "creation_date"],
   });
 };
 
 module.exports.getMovieById = async (id) => {
-  return await MoviesOrSeries.findOne({
+  return await MoviesOrSerie.findOne({
     where: {
-      id
+      id,
     },
     include: {
       model: Character,
@@ -21,27 +21,39 @@ module.exports.getMovieById = async (id) => {
   });
 };
 
-module.exports.moviesPut = async () => {
-  const { id } = req.params;
-  const movie = await MoviesOrSeries.findOne({
-    where: { id },
-  });
-  movie.set(req.body);
-  await movie.save();
+// PUNTO 10 QUERY PARAMS
+module.exports.searchMovies = async (params) => {
+  let queryFilter = {};
+
+  if (params) {
+    queryFilter = {
+      ...queryFilter,
+      where: params,
+    };
+  }
+
+  return await Character.findAll(queryFilter);
 };
 
-module.exports.moviesPost = async () => {
-  const newMovieOrSerie = await MoviesOrSeries.create({
-    title,
-    image,
-    ...req.body,
+module.exports.postMovie = async (body, filename) => {
+  const newMovieOrSerie = await service.createMoviesOrSerie({
+    ...body,
+    image: filename,
   });
   return newMovieOrSerie;
 };
 
-module.exports.moviesDelete = async () => {
-  const { id } = req.params;
-  await MoviesOrSeries.destroy({
+module.exports.putMovie = async (id, body) => {
+  await MoviesOrSerie.update(body, {
+    where: {
+      id,
+    },
+  });
+  // await movie.save();  PREGUNTAR EL GUARDAR SI LO REQUIERE
+};
+
+module.exports.deleteMovie = async (id) => {
+  await MoviesOrSerie.destroy({
     where: {
       id,
     },
