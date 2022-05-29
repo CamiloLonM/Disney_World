@@ -32,24 +32,29 @@ module.exports.searchMovies = async (params) => {
     };
   }
 
-  return await Character.findAll(queryFilter);
+  return await MoviesOrSerie.findAll(queryFilter);
 };
 
 module.exports.postMovie = async (body, filename) => {
-  const newMovieOrSerie = await service.createMoviesOrSerie({
+  return await MoviesOrSerie.create({
     ...body,
     image: filename,
   });
-  return newMovieOrSerie;
 };
 
-module.exports.putMovie = async (id, body) => {
-  await MoviesOrSerie.update(body, {
-    where: {
-      id,
+module.exports.putMovie = async (id, body, filename) => {
+  await MoviesOrSerie.update(
+    {
+      ...body,
+      image: filename,
     },
-  });
-  // await movie.save();  PREGUNTAR EL GUARDAR SI LO REQUIERE
+    {
+      where: {
+        id,
+      },
+    }
+  );
+  // await movie.save();
 };
 
 module.exports.deleteMovie = async (id) => {

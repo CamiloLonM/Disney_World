@@ -2,7 +2,7 @@ const service = require("../services/moviesOrSeries");
 // 7
 const getMovies = async (req, res) => {
   try {
-    const moviesOrSeries = await service.getMovie();
+    const moviesOrSeries = await service.getMovies();
 
     return res.status(200).json(moviesOrSeries);
   } catch (error) {
@@ -54,7 +54,7 @@ const postMovie = async (req, res) => {
 // Parte 9
 const putMovie = async (req, res) => {
   try {
-    if (!req.body.title) {
+    if (!req.body.title || !req.file) {
       return res.status(400).json({ message: `please check the data` });
     }
 
@@ -62,7 +62,7 @@ const putMovie = async (req, res) => {
       return res.status(404).json({ message: "Movie not found." });
     }
 
-    await service.putMovie(req.params.id, req.body);
+    await service.putMovie(req.params.id, req.body, req.file.filename);
 
     return res.sendStatus(200);
   } catch (error) {
@@ -73,7 +73,7 @@ const putMovie = async (req, res) => {
 const deleteMovie = async (req, res) => {
   try {
     if (!service.getMovieById(req.params.id)) {
-      return res.status(404).json({ message: "Movie not found." });
+      return res.status(404).json({ message: "Movie or Serie not found." });
     }
 
     await service.deleteMovie(req.params.id);

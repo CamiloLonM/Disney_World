@@ -23,6 +23,7 @@ const MoviesOrSeries = sequelize.define("MoviesOrSeries", {
   },
   qualification: {
     type: DataTypes.ENUM("1", "2", "3", "4", "5"),
+    defaultValue: "1",
     allowNull: true,
   },
 });

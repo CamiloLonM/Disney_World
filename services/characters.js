@@ -1,4 +1,5 @@
 const Character = require("../models/character");
+const MoviesOrSeries = require('../models/moviesOrSerie');
 const service = require("./characters_moviesOrSeries");
 
 module.exports.getCharacters = async () => {
@@ -33,31 +34,18 @@ module.exports.searchCharacters = async (params) => {
   return await Character.findAll(queryFilter);
 };
 
-// PREGUNTAR
-module.exports.createCharacter = async (body) => {
-  const newCharacter = await Character.create(body);
-  console.log("AAA -> ", newCharacter);
-  if (body.movieOrSerie) {
-    await service.createCharacter_MoviesOrSeries({
-      CharacterId: newCharacter.dataValues.id,
-      FilmId: body.movieOrSerie,
-    });
-  }
-
-  return newCharacter;
-};
-
 module.exports.postCharacter = async (body, filename) => {
-  const newCharacter = await service.createCharacter({
+  return await Character.create({
     ...body,
     image: filename,
   });
-
-  return newCharacter;
 };
 
-module.exports.putCharacter = async (id, body) => {
-  await Character.update(body, {
+module.exports.putCharacter = async (id, body, filename) => {
+  await Character.update({
+    ...body,
+    image: filename
+  }, {
     where: {
       id,
     },

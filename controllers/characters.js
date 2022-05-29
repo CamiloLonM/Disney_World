@@ -54,11 +54,8 @@ const postCharacter = async (req, res) => {
 
 const putCharacter = async (req, res) => {
   // 4
-  /**
-   * 2- (modificar la imagen en caso de ser necesario) si alcanza el tiempo
-   */
   try {
-    if (!req.body.name) {
+    if (!req.body.name || !req.file) {
       return res.status(400).json({ message: `please check the data` });
     }
 
@@ -66,7 +63,7 @@ const putCharacter = async (req, res) => {
       return res.status(404).json({ message: "Character not found." });
     }
 
-    await service.putCharacter(req.params.id, req.body);
+    await service.putCharacter(req.params.id, req.body, req.file.filename);
 
     return res.sendStatus(200);
   } catch (error) {

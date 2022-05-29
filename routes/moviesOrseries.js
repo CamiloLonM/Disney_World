@@ -1,6 +1,7 @@
 const { Router } = require("express");
 
 const router = Router();
+const { multerSingleFileMovieOrSerie } = require("../middlewares/multer");
 
 const {
   getMovies,
@@ -14,8 +15,8 @@ const {
 router.get("/", getMovies);
 router.get("/:id", getMovieById);
 router.get("/search", searchMovie);
-router.post("/", postMovie);
-router.put("/:id", putMovie);
+router.post("/", multerSingleFileMovieOrSerie, postMovie);
+router.put("/:id", multerSingleFileMovieOrSerie, putMovie);
 router.delete("/:id", deleteMovie);
 
 module.exports = router;

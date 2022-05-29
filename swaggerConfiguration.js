@@ -9,15 +9,10 @@ const swaggerSpec = {
     },
     servers: [
       {
-        url: `http://localhost:${config.port}/characters`,
+        url: `http://localhost:${config.port}/`,
         description:
-          "This endpoint handles the related information of the Characters.",
-      },
-      {
-        url: `http://localhost:${config.port}/movies`,
-        description:
-          "This endpoint handles the related information of the MoviesOrSerie.",
-      },
+          "This url is to test in localhost.",
+      }
     ],
   },
   apis: ["./docs/*.js"],

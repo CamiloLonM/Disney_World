@@ -18,7 +18,7 @@ router.get("/", getCharacters);
 router.get("/search", searchCharacter);
 router.get("/:id", getCharacterById);
 router.post("/", multerSingleFileCharacter, postCharacter);
-router.put("/:id", putCharacter);
+router.put("/:id", multerSingleFileCharacter, putCharacter);
 router.delete("/:id", deleteCharacter);
 
 module.exports = router;
