@@ -15,7 +15,7 @@ const getMovieById = async (req, res) => {
   try {
     const movieOrSerie = await service.getMovieById(req.params.id);
 
-    if (!movieOrSerie) {
+    if (!getmovieOrSerie) {
       return res.sendStatus(204);
     }
 
@@ -58,7 +58,7 @@ const putMovie = async (req, res) => {
       return res.status(400).json({ message: `please check the data` });
     }
 
-    if (!service.getMovieById(req.params.id)) {
+    if (!(await service.getMovieById(req.params.id))) {
       return res.status(404).json({ message: "Movie not found." });
     }
 
@@ -72,7 +72,7 @@ const putMovie = async (req, res) => {
 
 const deleteMovie = async (req, res) => {
   try {
-    if (!service.getMovieById(req.params.id)) {
+    if (!(await service.getMovieById(req.params.id))) {
       return res.status(404).json({ message: "Movie or Serie not found." });
     }
 
