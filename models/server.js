@@ -5,11 +5,14 @@ const app = require("express");
 const Character = require("./character");
 const MoviesOrSeries = require("./moviesOrSerie");
 const Gender = require("./gender");
+const User = require("./User");
+const Post = require("./Post");
 const sequelize = require("../database/db");
-const swaggerConfiguration = require("../swaggerConfiguration");
+
+const swaggerConfiguration = require("../config/swaggerConfiguration");
 const path = require("path");
 const jwt = require("jsonwebtoken");
-const config = require('../config');
+const config = require("../config/config");
 
 class Server {
   constructor() {
@@ -18,7 +21,6 @@ class Server {
     this.characterPath = "/characters";
     this.moviesOrSeriePath = "/movies";
     this.authPath = "/auth";
-
     this.swaggerPath = "/docs";
 
     //middlewares
@@ -30,10 +32,15 @@ class Server {
   middlewares() {
     //lectura parseo Body
     this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.static(path.resolve(__dirname, "../images")));
 
     // Swagger
-    this.app.use(this.swaggerPath, swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerConfiguration)));
+    this.app.use(
+      this.swaggerPath,
+      swaggerUI.serve,
+      swaggerUI.setup(swaggerJsDoc(swaggerConfiguration))
+    );
   }
 
   routes() {
@@ -63,6 +70,14 @@ class Server {
       Gender.belongsToMany(MoviesOrSeries, {
         through: "MoviesOrSeries_Gender",
       });
+      User.belongsToMany(Post, {
+        through: "User_Post",
+      });
+
+      Post.belongsToMany(User, {
+        through: "User_Post",
+      });
+
       sequelize.sync({ alter: true }).then(() => {
         console.log("Synchronized Tables");
       });

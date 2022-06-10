@@ -1,15 +1,12 @@
 const express = require("express");
-const { Router } = require("express");
-const jwt = require("jsonwebtoken");
-const app = express;
+const router = express.Router();
 
-const router = Router();
+// Middlewares
+const auth = require("../middlewares/auth");
+// Controllers
+const AuthControllers = require("../controllers/AuthControllers");
 
-const { authGet, authPost, getProtected } = require("../controllers/auth");
-
-router.get("/login", authGet);
-
-router.get("/register", authPost);
-router.get("/protected", getProtected);
+router.post("/login", AuthControllers.login);
+router.post("/register", AuthControllers.register);
 
 module.exports = router;

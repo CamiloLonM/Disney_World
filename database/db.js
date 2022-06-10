@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const config = require('../config');
+const config = require("../config/config");
 
 const sequelize = new Sequelize(
   config.database.database,
@@ -9,8 +9,8 @@ const sequelize = new Sequelize(
     host: config.database.host,
     dialect: "mysql",
     query: {
-      raw: true
-    }
+      raw: true,
+    },
   }
 );
 

@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require("./config");
 
 const swaggerSpec = {
   definition: {
@@ -10,9 +10,8 @@ const swaggerSpec = {
     servers: [
       {
         url: `http://localhost:${config.port}/`,
-        description:
-          "This url is to test in localhost.",
-      }
+        description: "This url is to test in localhost.",
+      },
     ],
   },
   apis: ["./docs/*.js"],
