@@ -58,4 +58,4 @@ npm install
 
 To run the API use the command.
 
-npm start
+npm run dev
