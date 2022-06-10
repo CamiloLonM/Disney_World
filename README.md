@@ -1,17 +1,20 @@
 # Disney_World_Nodejs
 
 API
-Introduction - The Project's Aim
-This API lets you create, update and delete an user, also it allows you to get the information of it.
+
+## Introduction - The Project's Aim...
+
+This API allows you to know and modify the characters that make it up and understand in which movies they participated. Also allows you to create, update and delete a user.
 JWT-based authorization and Sequelize JavaScript ORM
 
-# Technologies
 
-Node JS
-Express JS
-Mysql
-sequelize
-Swagger (document API)
+## Technologies
+
+- Node JS
+- Express JS
+- Mysql
+- sequelize
+- Swagger (document API)
 
 How to run this App ?
 To run the API you have to change some environment variables
