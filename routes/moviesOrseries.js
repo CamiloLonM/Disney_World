@@ -13,8 +13,8 @@ const {
 } = require("../controllers/moviesOrSeries");
 
 router.get("/", getMovies);
-router.get("/:id", getMovieById);
 router.get("/search", searchMovie);
+router.get("/:id", getMovieById);
 router.post("/", multerSingleFileMovieOrSerie, postMovie);
 router.put("/:id", multerSingleFileMovieOrSerie, putMovie);
 router.delete("/:id", deleteMovie);

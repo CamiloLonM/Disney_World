@@ -3,7 +3,6 @@ const service = require("../services/moviesOrSeries");
 const getMovies = async (req, res) => {
   try {
     const moviesOrSeries = await service.getMovies();
-
     return res.status(200).json(moviesOrSeries);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -15,10 +14,9 @@ const getMovieById = async (req, res) => {
   try {
     const movieOrSerie = await service.getMovieById(req.params.id);
 
-    if (!getmovieOrSerie) {
+    if (!movieOrSerie) {
       return res.sendStatus(204);
     }
-
     return res.status(200).json(movieOrSerie);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -29,9 +27,7 @@ const getMovieById = async (req, res) => {
 const searchMovie = async (req, res) => {
   try {
     const { query } = req;
-
     const movies = await service.searchMovies(query);
-
     return res.status(200).json(movies);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -43,7 +39,6 @@ const postMovie = async (req, res) => {
     if (!req.body.title || !req.file) {
       return res.status(400).json({ message: `please check the data` });
     }
-
     const moviesOrSerie = await service.postMovie(req.body, req.file.filename);
     res.status(201).json(moviesOrSerie);
   } catch (error) {
@@ -57,13 +52,10 @@ const putMovie = async (req, res) => {
     if (!req.body.title || !req.file) {
       return res.status(400).json({ message: `please check the data` });
     }
-
     if (!(await service.getMovieById(req.params.id))) {
       return res.status(404).json({ message: "Movie not found." });
     }
-
     await service.putMovie(req.params.id, req.body, req.file.filename);
-
     return res.sendStatus(200);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -75,9 +67,7 @@ const deleteMovie = async (req, res) => {
     if (!(await service.getMovieById(req.params.id))) {
       return res.status(404).json({ message: "Movie or Serie not found." });
     }
-
     await service.deleteMovie(req.params.id);
-
     return res.sendStatus(200);
   } catch (error) {
     return res.status(500).json({ message: error.message });

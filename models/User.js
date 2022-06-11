@@ -3,7 +3,7 @@ const sequelize = require("../database/db");
 
 // user
 
-const User = sequelize.define(" User", {
+const User = sequelize.define("User", {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -23,6 +23,16 @@ const User = sequelize.define(" User", {
       },
     },
   },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      isEmail: {
+        msg: "The email must be a valid email",
+      },
+    },
+  },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -31,24 +41,6 @@ const User = sequelize.define(" User", {
         args: [6, 200],
         msg: "The password must have at least 6 characters",
       },
-    },
-    email: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        isEmail: {
-          msg: "The email must be a valid email",
-        },
-      },
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
     },
   },
 });

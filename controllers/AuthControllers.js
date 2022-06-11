@@ -1,12 +1,12 @@
-const { User } = require("../models/User");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
-const jwt = "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
 
 module.exports = {
   // Login
   login(req, res) {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
 
     // Buscar usuario
     User.findOne({
@@ -20,7 +20,7 @@ module.exports = {
         } else {
           if (bcrypt.compareSync(password, user.password)) {
             // Creamos el token
-            const token = jwt.sign({ user: user }, authConfig.secret, {
+            let token = jwt.sign({ user: user }, authConfig.secret, {
               expiresIn: authConfig.expires,
             });
 
@@ -30,7 +30,7 @@ module.exports = {
             });
           } else {
             // Unauthorized Access
-            res.status(401).json({ msg: "Invalid password" });
+            res.status(401).json({ msg: "Incorrect password" });
           }
         }
       })
@@ -39,28 +39,35 @@ module.exports = {
       });
   },
 
-  // Regristro
+  // Registro
   register(req, res) {
-    // Encriptar Contraseña
-    const password = bcrypt.hashSync(
+    // Validacion de contraseña
+    if (req.body.password.length < 6) {
+      return res
+        .status(401)
+        .json({ msg: "The password must be greater than 6" });
+    }
+    // Encriptamos la contraseña
+    let password = bcrypt.hashSync(
       req.body.password,
-      Number.parseInt(authConfig.rounds)
+      Number.parseInt(authConfig.rounds) // se le puede añadir un  +   o con la propiedad Numbers
     );
 
-    // Crear Usuario
+    // Crear un usuario
     User.create({
       name: req.body.name,
       email: req.body.email,
-      password,
+      password: password,
     })
       .then((user) => {
-        const token = token.sign({ user: user }, authConfig.secret, {
+        // Creamos el token
+        let token = jwt.sign({ user: user }, authConfig.secret, {
           expiresIn: authConfig.expires,
         });
 
         res.json({
-          user,
-          token,
+          user: user,
+          token: token,
         });
       })
       .catch((err) => {

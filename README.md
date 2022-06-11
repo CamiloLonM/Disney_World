@@ -7,7 +7,6 @@ API
 This API allows you to know and modify the characters that make it up and understand in which movies they participated. Also allows you to create, update and delete a user.
 JWT-based authorization and Sequelize JavaScript ORM
 
-
 ## Technologies
 
 - Node JS
@@ -38,3 +37,24 @@ npm install
 
 npm run dev
 ```
+
+# WEB
+
+## Introduction - The Project's Aim
+
+## Technologies
+
+Nodejs
+
+## How to run this App ?
+
+To run the WEB you have to change some environment variables
+
+APP_URL= url of the API of this project (for example: http://localhost:8000).
+Then you have to install dependencies using the command.
+
+npm install
+
+To run the API use the command.
+
+npm run dev

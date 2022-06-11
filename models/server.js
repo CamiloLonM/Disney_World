@@ -1,23 +1,18 @@
 const express = require("express");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
-const app = require("express");
 const Character = require("./character");
 const MoviesOrSeries = require("./moviesOrSerie");
 const Gender = require("./gender");
 const User = require("./User");
-const Post = require("./Post");
 const sequelize = require("../database/db");
-
 const swaggerConfiguration = require("../config/swaggerConfiguration");
 const path = require("path");
-const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
 class Server {
   constructor() {
     this.app = express();
-
     this.characterPath = "/characters";
     this.moviesOrSeriePath = "/movies";
     this.authPath = "/auth";
@@ -69,13 +64,6 @@ class Server {
       });
       Gender.belongsToMany(MoviesOrSeries, {
         through: "MoviesOrSeries_Gender",
-      });
-      User.belongsToMany(Post, {
-        through: "User_Post",
-      });
-
-      Post.belongsToMany(User, {
-        through: "User_Post",
       });
 
       sequelize.sync({ alter: true }).then(() => {
