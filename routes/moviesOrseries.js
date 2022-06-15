@@ -1,6 +1,8 @@
 const { Router } = require("express");
-
 const router = Router();
+
+// Middlewares
+const auth = require("../middlewares/auth");
 const { multerSingleFileMovieOrSerie } = require("../middlewares/multer");
 
 const {
@@ -12,7 +14,7 @@ const {
   putMovie,
 } = require("../controllers/moviesOrSeries");
 
-router.get("/", getMovies);
+router.get("/", auth, getMovies);
 router.get("/search", searchMovie);
 router.get("/:id", getMovieById);
 router.post("/", multerSingleFileMovieOrSerie, postMovie);

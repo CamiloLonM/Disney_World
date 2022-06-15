@@ -4,7 +4,6 @@ const swaggerJsDoc = require("swagger-jsdoc");
 const Character = require("./character");
 const MoviesOrSeries = require("./moviesOrSerie");
 const Gender = require("./gender");
-const User = require("./User");
 const sequelize = require("../database/db");
 const swaggerConfiguration = require("../config/swaggerConfiguration");
 const path = require("path");
@@ -16,7 +15,7 @@ class Server {
     this.characterPath = "/characters";
     this.moviesOrSeriePath = "/movies";
     this.authPath = "/auth";
-    this.swaggerPath = "/docs";
+    this.swaggerPath = "/docs,";
 
     //middlewares
     this.middlewares();

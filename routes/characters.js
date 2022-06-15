@@ -1,10 +1,12 @@
 // Controlador de ruta via acceso
 const { Router } = require("express");
-
 const router = Router();
 
+// Middlewares
+const auth = require("../middlewares/auth");
 const { multerSingleFileCharacter } = require("../middlewares/multer");
 
+// Rutas
 const {
   getCharacters,
   getCharacterById,
@@ -14,7 +16,7 @@ const {
   deleteCharacter,
 } = require("../controllers/characters");
 
-router.get("/", getCharacters);
+router.get("/", auth, getCharacters);
 router.get("/search", searchCharacter);
 router.get("/:id", getCharacterById);
 router.post("/", multerSingleFileCharacter, postCharacter);
