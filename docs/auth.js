@@ -1,47 +1,109 @@
 /**
  * @swagger
- * /characters/{id}:
- *  get:
- *   summary: Get Character by id
- *   description: endpoint to get character by id
- *   security:
- *    - bearerAuth: []
- *   parameters:
- *    - in: path
- *      name: id
- *      required: true
- *      description: Numeric ID for the character
- *      schema:
- *       id: integer
- *   responses:
- *     200:
- *       description: get character OK
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               first_name:
- *                 type: string
- *               last_name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *     204:
- *       description: character not found
- *     400:
- *       description: create character ERROR
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               message:
- *                 type: string
- *                 description: description of error
+ * components:
+ *  schemas:
+ *    User:
+ *      type: object
+ *      properties:
+ *        name:
+ *          type: string
+ *          description: the user name
+ *        email:
+ *          type: string
+ *          description: the user email
+ *        password:
+ *          type: string
+ *          description: The password must have at least 6 characters
+ *      required:
+ *        - name
+ *        - email
+ *        - password
+ *      example:
+ *        name: prueba
+ *        email: prueba@prueba.com
+ *        password: 123456.....
  *
- * /characters:
- *  get:
+ * @swagger
+ * /auth/login:
+ *  post:
+ *    summary: User login
+ *    tags: [User]
+ *    requestBody:
+ *     content:
+ *      multipart/form-data:
+ *        schema:
+ *          type: object
+ *          required: [email, password]
+ *          properties:
+ *           email:
+ *            type: string
+ *           password:
+ *            type: string
+ *    responses:
+ *     404:
+ *      description: email not found
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              message:
+ *                type: string
+ *                description: User with this email not found
+ *     401:
+ *      description: incorrect pass
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              message:
+ *                type: string
+ *                description: Incorrect password
+ *     500:
+ *      description: login ERR
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              message:
+ *                type: string
+ *                description: User login ERROR
+ *
+ * @swagger
+ * /auth/register:
+ *  post:
+ *    summary: User registre
+ *    tags: [User]
+ *    requestBody:
+ *     content:
+ *      multipart/form-data:
+ *        schema:
+ *          type: object
+ *          required: [name, email, password]
+ *          properties:
+ *           name:
+ *            type: string
+ *           email:
+ *            type: string
+ *           password:
+ *            type: string
+ *    responses:
+ *      401:
+ *        description: lenght password
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *      500:
+ *        description: registre token ERR
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  description: ERROR
  */

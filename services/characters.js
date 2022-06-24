@@ -1,6 +1,5 @@
 const Character = require("../models/character");
-const MoviesOrSeries = require('../models/moviesOrSerie');
-const service = require("./characters_moviesOrSeries");
+const MoviesOrSeries = require("../models/moviesOrSerie");
 
 module.exports.getCharacters = async () => {
   return await Character.findAll({
@@ -42,14 +41,17 @@ module.exports.postCharacter = async (body, filename) => {
 };
 
 module.exports.putCharacter = async (id, body, filename) => {
-  await Character.update({
-    ...body,
-    image: filename
-  }, {
-    where: {
-      id,
+  await Character.update(
+    {
+      ...body,
+      image: filename,
     },
-  });
+    {
+      where: {
+        id,
+      },
+    }
+  );
 };
 
 module.exports.deleteCharacter = async (id) => {

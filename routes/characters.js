@@ -17,10 +17,10 @@ const {
 } = require("../controllers/characters");
 
 router.get("/", auth, getCharacters);
-router.get("/search", searchCharacter);
-router.get("/:id", getCharacterById);
-router.post("/", multerSingleFileCharacter, postCharacter);
-router.put("/:id", multerSingleFileCharacter, putCharacter);
-router.delete("/:id", deleteCharacter);
+router.get("/search", auth, searchCharacter);
+router.get("/:id", auth, getCharacterById);
+router.post("/", auth, multerSingleFileCharacter, postCharacter);
+router.put("/:id", auth, multerSingleFileCharacter, putCharacter);
+router.delete("/:id", auth, deleteCharacter);
 
 module.exports = router;

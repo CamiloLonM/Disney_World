@@ -1,8 +1,6 @@
 const MoviesOrSerie = require("../models/moviesOrSerie");
 const Character = require("../models/character");
 
-const service = require("./characters_moviesOrSeries");
-
 module.exports.getMovies = async () => {
   return await MoviesOrSerie.findAll({
     attributes: ["title", "image", "creation_date"],

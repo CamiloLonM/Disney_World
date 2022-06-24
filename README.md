@@ -4,7 +4,8 @@ API
 
 ## Introduction - The Project's Aim...
 
-This API allows you to know and modify the characters that make it up and understand in which movies they participated. Also allows you to create, update and delete a user.
+This API allows you to know and modify the characters that make it up and understand in which movies they participated. Also allows you to create user.
+Confirmation of registration by email with npm Nodemailers
 JWT-based authorization and Sequelize JavaScript ORM
 
 ## Technologies
@@ -14,6 +15,7 @@ JWT-based authorization and Sequelize JavaScript ORM
 - Mysql
 - sequelize
 - Swagger (document API)
+- Nodemailers( Confirmation of registration)
 
 How to run this App ?
 To run the API you have to change some environment variables

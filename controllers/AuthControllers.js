@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
+const transporter = require("../config/mailer");
 
 module.exports = {
   // Login
@@ -69,6 +70,16 @@ module.exports = {
           user: user,
           token: token,
         });
+        try {
+          transporter.sendMail({
+            form: "email.test.nodejsdv@gmail.com",
+            to: req.body.email,
+            subject: "Sending Email using Node.js",
+            html: `<h1> Welcome </h1> <ul> <li>User Name: ${req.body.name}</li> <li> User Email: ${req.body.email} </li> </ul><p> ¡ Thank you for your registration. ! </p>`,
+          });
+        } catch (err) {
+          return res.status(400).json(err);
+        }
       })
       .catch((err) => {
         res.status(500).json(err);

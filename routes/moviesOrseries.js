@@ -15,10 +15,10 @@ const {
 } = require("../controllers/moviesOrSeries");
 
 router.get("/", auth, getMovies);
-router.get("/search", searchMovie);
-router.get("/:id", getMovieById);
-router.post("/", multerSingleFileMovieOrSerie, postMovie);
-router.put("/:id", multerSingleFileMovieOrSerie, putMovie);
-router.delete("/:id", deleteMovie);
+router.get("/search", auth, searchMovie);
+router.get("/:id", auth, getMovieById);
+router.post("/", auth, multerSingleFileMovieOrSerie, postMovie);
+router.put("/:id", auth, multerSingleFileMovieOrSerie, putMovie);
+router.delete("/:id", auth, deleteMovie);
 
 module.exports = router;

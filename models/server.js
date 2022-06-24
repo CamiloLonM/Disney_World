@@ -14,8 +14,8 @@ class Server {
     this.app = express();
     this.characterPath = "/characters";
     this.moviesOrSeriePath = "/movies";
+    this.swaggerPath = "/docs";
     this.authPath = "/auth";
-    this.swaggerPath = "/docs,";
 
     //middlewares
     this.middlewares();
@@ -26,8 +26,9 @@ class Server {
   middlewares() {
     //lectura parseo Body
     this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(express.urlencoded({ extended: false })); // Para enteder los datos que legan del formulario
     this.app.use(express.static(path.resolve(__dirname, "../images")));
+    this.app.use(express.static(path.join(__dirname, "../public")));
 
     // Swagger
     this.app.use(
@@ -65,7 +66,7 @@ class Server {
         through: "MoviesOrSeries_Gender",
       });
 
-      sequelize.sync({ alter: true }).then(() => {
+      sequelize.sync({ alter: false, force: false }).then(() => {
         console.log("Synchronized Tables");
       });
     } catch (error) {
