@@ -15,7 +15,7 @@ JWT-based authorization and Sequelize JavaScript ORM
 - Mysql
 - sequelize
 - Swagger (document API)
-- Nodemailers( Confirmation of registration)
+- Nodemailers (Confirmation of registration)
 
 How to run this App ?
 To run the API you have to change some environment variables
