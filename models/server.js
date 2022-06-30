@@ -26,7 +26,7 @@ class Server {
   middlewares() {
     //lectura parseo Body
     this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false })); // Para enteder los datos que legan del formulario
+    this.app.use(express.urlencoded({ extended: false })); // Para enteder los datos que llegan del formulario
     this.app.use(express.static(path.resolve(__dirname, "../images")));
     this.app.use(express.static(path.join(__dirname, "../public")));
 

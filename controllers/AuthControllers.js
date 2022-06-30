@@ -75,7 +75,7 @@ module.exports = {
             form: "email.test.nodejsdv@gmail.com",
             to: req.body.email,
             subject: "Sending Email using Node.js",
-            html: `<h1> Welcome </h1> <ul> <li>User Name: ${req.body.name}</li> <li> User Email: ${req.body.email} </li> </ul><p> ¡ Thank you for your registration. ! </p>`,
+            html: `<h1> Welcome </h1> <h2>User Information</h2> <ul> <li>User Name: ${req.body.name}</li> <li> User Email: ${req.body.email} </li> </ul><p> ¡ Thank you for your registration. ! </p>`,
           });
         } catch (err) {
           return res.status(400).json(err);
