@@ -2,7 +2,7 @@
  * @swagger
  * components:
  *  schemas:
- *    User:
+ *    user:
  *      type: object
  *      properties:
  *        name:
@@ -27,18 +27,19 @@
  * /auth/login:
  *  post:
  *    summary: User login
- *    tags: [User]
+ *    tags: [user]
  *    requestBody:
- *     content:
- *      multipart/form-data:
- *        schema:
- *          type: object
- *          required: [email, password]
- *          properties:
- *           email:
- *            type: string
- *           password:
- *            type: string
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           type: object
+ *           required: [email, password]
+ *           properties:
+ *            email:
+ *             type: string
+ *            password:
+ *             type: string
  *    responses:
  *     404:
  *      description: email not found
@@ -74,21 +75,22 @@
  * @swagger
  * /auth/register:
  *  post:
- *    summary: User registre
- *    tags: [User]
+ *    summary: User register
+ *    tags: [user]
  *    requestBody:
- *     content:
- *      multipart/form-data:
- *        schema:
- *          type: object
- *          required: [name, email, password]
- *          properties:
- *           name:
- *            type: string
- *           email:
- *            type: string
- *           password:
- *            type: string
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           type: object
+ *           required: [name,email, password]
+ *           properties:
+ *            name:
+ *             type: string
+ *            email:
+ *             type: string
+ *            password:
+ *             type: string
  *    responses:
  *      401:
  *        description: lenght password
