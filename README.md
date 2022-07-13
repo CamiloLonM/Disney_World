@@ -31,7 +31,7 @@ my_URL: url of the mySql database. (for example if you run this in your local ma
 First edit the **\_.env ** file for your database. Later:
 
 ```
-# Instalar dependencias
+# install dependencies
 
 npm install
 
