@@ -30,12 +30,12 @@ my_URL: url of the mySql database. (for example if you run this in your local ma
 
 First edit the **\_.env ** file for your database. Later:
 
-```
-# install dependencies
+
+* install dependencies
 
 npm install
 
-# To run the API use the command.
+* To run the API use the command.
 
 npm run dev
-```
+
